@@ -11,47 +11,66 @@ export default new Vuex.Store({
     apartments: [],
     apartmentsData: [],
     floor: {
-      min: 1,
-      max: 99,
+      min: null,
+      max: null,
     },
     square: {
-      min: 99,
-      max: 999,
+      min: null,
+      max: null,
     },
     price: {
-      min: 9.9,
-      max: 99.9,
+      min: null,
+      max: null,
     },
 
   },
   mutations: {
-    updateApartmentsData(state, data) {
-      state.apartmentsData = data;
+    updateApartmentsData(state, payload) {
+      state.apartmentspayload = payload;
     },
-    filterRoom(state, data) {
-      state.currentRoom = data;
+    filterRoom(state, payload) {
+      state.currentRoom = payload;
     },
-    filterMinFloor(state, data) {
-      state.floor.min = data;
+    filterMinFloor(state, payload) {
+      state.floor.min = payload;
     },
-    filterMaxFloor(state, data) {
-      state.floor.max = data;
+    filterMaxFloor(state, payload) {
+      state.floor.max = payload;
     },
-    filterMinSquare(state, data) {
-      state.square.min = data;
+    filterMinSquare(state, payload) {
+      state.square.min = payload;
     },
-    filterMaxSquare(state, data) {
-      state.square.max = data;
+    filterMaxSquare(state, payload) {
+      state.square.max = payload;
     },
-    filterMinPrice(state, data) {
-      state.price.min = data;
+    filterMinPrice(state, payload) {
+      state.price.min = payload;
     },
-    filterMaxPrice(state, data) {
-      state.price.max = data;
+    filterMaxPrice(state, payload) {
+      state.price.max = payload;
     },
     syncApartments(state) {
       state.apartments = state.apartmentsData;
     },
+    setMaxValue(state, { data, type }) {
+      let max = 0;
+      data.forEach((el) => {
+        if (el[type] > max) {
+          max = el[type];
+        }
+      });
+      state[type].max = max;
+    },
+    setMinValue(state, { data, type }) {
+      let min = Infinity;
+      data.forEach((el) => {
+        if (el[type] < min) {
+          min = el[type];
+        }
+      });
+      state[type].min = min;
+    },
+
   },
   getters: {
     filteredApartments(state) {
@@ -65,6 +84,20 @@ export default new Vuex.Store({
         return false;
       });
     },
+    prettyMaxPrice(state) {
+      const MILLION = 1000000;
+      return Math.ceil(state.price.max / MILLION);
+    },
+    prettyMinPrice(state) {
+      const MILLION = 1000000;
+      return Math.ceil(state.price.min / MILLION);
+    },
+    prettyMinSquare(state) {
+      return Math.ceil(state.square.min);
+    },
+    prettyMaxSquare(state) {
+      return Math.ceil(state.square.max);
+    },
   },
   actions: {
     async loadApartmentsData(context) {
@@ -72,6 +105,12 @@ export default new Vuex.Store({
         .then((response) => {
           context.commit('updateApartmentsData', response.data);
           context.commit('syncApartments');
+          context.commit('setMaxValue', { data: response.data, type: 'floor' });
+          context.commit('setMinValue', { data: response.data, type: 'floor' });
+          context.commit('setMaxValue', { data: response.data, type: 'square' });
+          context.commit('setMinValue', { data: response.data, type: 'square' });
+          context.commit('setMaxValue', { data: response.data, type: 'price' });
+          context.commit('setMinValue', { data: response.data, type: 'price' });
         }).catch((error) => console.log(error));
     },
   },
