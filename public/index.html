@@ -9,7 +9,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css">
   </head>
   <body>
-    <main class="main">
+
+    <div id="app">
+
+    </div>
+    <!-- <main class="main">
       <section class="filter">
         <div class="container filter__container">
           <h1 class="filter__title">
@@ -26,7 +30,6 @@
                     <label class="form-rooms__label" for="room-s">
                       <input type="radio" id="room-s" name="room" value="S" class="form-rooms__input">
                       <div class="form-rooms__input--custom">S</div>
-
                     </label>
                   </li>
                   <li class="form-rooms__item">
@@ -48,7 +51,7 @@
                     </label>
                   </li>
                 </ul>
-              </li>
+              </li> -->
               <li class="filter-form__item form-floors">
                 <h2 class="filter-form__title form-floors__title">
                   ЭТАЖ
@@ -62,7 +65,7 @@
                   <input type="range" value="99" min="1" max="99" class="form-floors__input form-floors__input-range--max">
                 </div>
               </li>
-              <li class="filter-form__item">
+              <li class="filter-form__item form-square">
                 <h2 class="filter-form__title form-square">
                   ПЛОЩАДЬ, м<sup>2</sup>
                 </h2>
@@ -75,7 +78,7 @@
                   <input type="range" value="999" min="99" max="999" class="form-square__input form-square__input-range--max">
                 </div>
               </li>
-              <li class="filter-form__item">
+              <li class="filter-form__item form-price">
                 <h2 class="filter-form__title form-price">
                   СТОИМОСТЬ, млн. р.
                 </h2>
@@ -92,10 +95,10 @@
                 <button type="submit" class="form-btns__btn form-btns__btn--submit">Применить</button>
                 <button type="reset" class="form-btns__btn form-btns__btn--reset">сбросить фильтр</button>
               </li>
-            </ul>
-          </form>
-        </div>
-      </section>
+            <!-- </ul> -->
+          <!-- </form> -->
+        <!-- </div> -->
+      <!-- </section> -->
       <section class="content">
         <div class="container filter__container">
           <h2 class="content__title title--hide">
@@ -465,11 +468,9 @@
           </ul>
         </div>
       </section>
-    </main>
+    <!-- </main> -->
 
-    <div id="app">
 
-    </div>
 
   </body>
 </html>
