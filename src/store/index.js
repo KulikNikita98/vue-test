@@ -17,6 +17,7 @@ export default new Vuex.Store({
     square: {
       min: null,
       max: null,
+
     },
     price: {
       min: null,
@@ -26,31 +27,34 @@ export default new Vuex.Store({
   },
   mutations: {
     updateApartmentsData(state, payload) {
-      state.apartmentspayload = payload;
+      state.apartmentsData = payload;
     },
     filterRoom(state, payload) {
       state.currentRoom = payload;
     },
     filterMinFloor(state, payload) {
-      state.floor.min = payload;
+      state.floor.chosenFilterMin = payload;
     },
     filterMaxFloor(state, payload) {
-      state.floor.max = payload;
+      state.floor.chosenFilterMax = payload;
     },
     filterMinSquare(state, payload) {
-      state.square.min = payload;
+      state.square.chosenFilterMin = payload;
     },
     filterMaxSquare(state, payload) {
-      state.square.max = payload;
+      state.square.chosenFilterMax = payload;
     },
     filterMinPrice(state, payload) {
-      state.price.min = payload;
+      state.price.chosenFilterMin = payload;
     },
     filterMaxPrice(state, payload) {
-      state.price.max = payload;
+      state.price.chosenFilterMax = payload;
     },
     syncApartments(state) {
-      state.apartments = state.apartmentsData;
+      state.apartments = state.apartmentsData.map((apartment) => ({
+        ...apartment,
+        img: '/img/plan.png',
+      }));
     },
     setMaxValue(state, { data, type }) {
       let max = 0;
@@ -73,31 +77,21 @@ export default new Vuex.Store({
 
   },
   getters: {
-    filteredApartments(state) {
-      return state.apartments.filter((apartment) => {
-        if ((apartment.size.toLowerCase() === state.currentRoom.toLowerCase())
-          && (apartment.floor >= state.floor.min && apartment.floor.max <= state.floor.max)
-          && (apartment.square >= state.square.min && apartment.square.max <= state.square.max)
-          && (apartment.price >= state.price.min && apartment.price.max <= state.price.max)) {
-          return apartment;
-        }
-        return false;
-      });
-    },
     prettyMaxPrice(state) {
       const MILLION = 1000000;
       return Math.ceil(state.price.max / MILLION);
     },
     prettyMinPrice(state) {
       const MILLION = 1000000;
-      return Math.ceil(state.price.min / MILLION);
+      return Math.floor(state.price.min / MILLION);
     },
     prettyMinSquare(state) {
-      return Math.ceil(state.square.min);
+      return Math.floor(state.square.min);
     },
     prettyMaxSquare(state) {
       return Math.ceil(state.square.max);
     },
+
   },
   actions: {
     async loadApartmentsData(context) {
