@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="submit" @reset.prevent="reset"
   action="#!" class="filter__form filter-form">
-    <ul class="filter-form__list">
+    <ul  class="filter-form__list pl-0">
       <FormFilterItem class="filter-form__item form-rooms">
         <div class="filter-form__outer-wrapper">
                <FormTitle title="Комнаты" class="form-title form-rooms__title" />
@@ -297,27 +297,34 @@ export default {
 .filter-form {
   &__list {
     display: flex;
-    justify-content: space-between;
     align-items: flex-start;
   }
 
   &__item {
-    &:not(:last-child) {
+    &:not(:first-child) {
       display: flex;
       align-items: center;
-    .form-rooms__input--custom {
-        margin-right: 4px;
-      }
-
-    &::after {
+      margin-left: auto;
+    &::before {
       content: "";
+      margin-right: 30px;
       display: block;
-      margin: 0 30px;
-      margin-top: 25px;
       height: 20px;
       width: 1px;
       background-color: #EBEBEB;
     }
+    }
+    &:last-child {
+
+      &::before {
+        content: none;
+      }
+    }
+
+    &:first-child {
+      .form-rooms__input--custom {
+        margin-left: 4px;
+      }
     }
   }
   &__separator {

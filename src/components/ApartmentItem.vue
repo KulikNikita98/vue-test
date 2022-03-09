@@ -1,6 +1,7 @@
 <template>
-  <li class="content__item" @mouseenter="mouseEnterCard" @mouseleave="mouseLeaveCard">
-    <article class="content__article apartment">
+  <v-col class="col-3">
+    <article  @mouseenter="mouseEnterCard"
+    @mouseleave="mouseLeaveCard" class="content__article apartment">
       <div class="apartment__top">
         <div class="apartment__floor">{{apartment.floor}} этаж</div>
         <div class="apartment__top-wrapper">
@@ -9,21 +10,18 @@
         </div>
       </div>
       <div class="apartment__middle">
-        <div class="apartment__id">№ {{apartment.number}}</div>
-        <v-img :src="apartment.img" :alt="apartment.building_name" class="apartment__img" />
+        <div class="apartment__id">№ {{apartment.building_id}}</div>
+        <img :src="apartment.img" :alt="apartment.building_name" class="apartment__img" />
       </div>
       <div class="apartment__bottom">
         <h3 class="apartment__price">{{formattedPrice(prettyPrice)}} р.</h3>
         <small class="apartment__square-price">
           {{formattedPrice(priceForSquare)}} р. за м <sup>2</sup></small>
-          <transition name=fade>
         <BaseBtn text="ПОДРОБНЕЕ"
         v-show="isActive"  class="apartment__detailed"> </BaseBtn>
-          </transition>
-
       </div>
     </article>
-  </li>
+  </v-col>
 </template>
 
 <script>
@@ -65,16 +63,6 @@ export default {
 
 <style lang="scss">
 
-.fade-enter-active, .fade-leave-active {
-  transition-property: opacity, visibility;
-  transition-timing-function: ease-in-out;
-  transition-duration: .3s;
-}
-
-.fade-enter, .fade-leave-to {
-  opacity: 0;
-  visibility: hidden;
-}
   .apartment {
     display: flex;
     flex-direction: column;
@@ -83,6 +71,20 @@ export default {
     background: #FFFFFF;
     box-shadow: 0px 5px 20px rgba(86, 86, 86, 0.05);
     border-radius: 10px;
+      transition-property: box-shadow;
+        transition-timing-function: ease-in-out;
+        transition-duration: .3s;
+      &:hover {
+        box-shadow: 0px 5px 20px rgba(86, 86, 86, 0.25);
+        transition-property: box-shadow;
+        transition-timing-function: ease-in-out;
+        transition-duration: .3s;
+      }
+      &:hover &__middle {
+          margin-bottom: 0;
+          padding-bottom: 0;
+
+        }
     &__top {
       display: flex;
       justify-content: space-between;
@@ -97,6 +99,11 @@ export default {
       line-height: 28px;
       letter-spacing: 0em;
       color: rgba(#2C323A, .5);
+    }
+
+    &__img {
+      object-fit: cover;
+      width: 100%;
     }
 
     &__room {
@@ -175,6 +182,7 @@ export default {
     &__detailed {
       padding: 5px;
       width: 100%;
+      height: 40px;
       font-size: 14px;
       font-weight: 700;
       line-height: 28px;

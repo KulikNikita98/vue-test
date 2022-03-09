@@ -1,8 +1,8 @@
 <template>
-  <v-app>
-    <v-main class="main">
+  <v-app class="app">
+    <v-main class="main pa-8  white">
       <section class="filter">
-        <div class="container filter__container">
+        <v-container class="container filter__container">
           <h1 class="main-title filter__title">Lorem ipsum dolor sit</h1>
           <FilterForm
             :currentRooms.sync="currentRooms"
@@ -13,19 +13,19 @@
             :currentMinPrice.sync="currentMinPrice"
             :currentMaxPrice.sync="currentMaxPrice"
           />
-        </div>
+        </v-container>
       </section>
       <section class="content">
-        <div class="container content__container">
+        <v-container class="container content__container">
           <h2 class="content__title visually-hidden">Квартиры</h2>
-          <ul class="content__list">
+          <v-row >
             <ApartmentItem
               v-for="apartment in filteredApartments"
               :key="apartment.id"
               :apartment="apartment"
             />
-          </ul>
-        </div>
+          </v-row>
+        </v-container>
       </section>
     </v-main>
   </v-app>
@@ -119,16 +119,16 @@ export default {
 </script>
 
 <style lang="scss" >
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+
+.app {
+  border-radius: 10px;
 }
 body {
   padding: 80px;
   font-family: "Roboto";
   background-color: #2f2e2d;
   color: #2C323A;
+
 }
 .container {
   max-width: 1200px;
@@ -136,31 +136,22 @@ body {
   margin: 0 auto;
 }
 
-  ul, ol {
-    list-style: none;
-  }
-
-.main {
-  padding: 30px;
-  max-height: 1200px;
-  overflow-y: auto;
-  border-radius: 10px;
-  background-color: #fff;
-}
-
-.filter {
-  padding-top: 40px;
-  background-color:#F8F8F8;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-}
 .content {
   padding-top: 50px;
   padding-bottom: 100px;
-  background-color:#F8F8F8;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
 }
+
+.v-main {
+  &__wrap {
+    max-height: 1550px;
+    background-color: #F8F8F8;
+    border-radius: 10px;
+  }
+}
+
+  ul, ol {
+    list-style: none;
+  }
 
 .main-title {
   font-size: 34px;
@@ -173,13 +164,6 @@ body {
 .filter {
   &__title {
     margin-bottom: 50px;
-  }
-}
-
-.content {
-  &__list {
-    display: flex;
-    flex-wrap: wrap;
   }
 }
 
