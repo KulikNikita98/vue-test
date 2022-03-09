@@ -1,11 +1,11 @@
 <template>
-  <div>
-    <main class="main">
+  <v-app>
+    <v-main class="main">
       <section class="filter">
         <div class="container filter__container">
           <h1 class="main-title filter__title">Lorem ipsum dolor sit</h1>
           <FilterForm
-            :currentRoom.sync="currentRoom"
+            :currentRooms.sync="currentRooms"
             :currentMinFloor.sync="currentMinFloor"
             :currentMaxFloor.sync="currentMaxFloor"
             :currentMinSquare.sync="currentMinSquare"
@@ -27,8 +27,8 @@
           </ul>
         </div>
       </section>
-    </main>
-  </div>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
@@ -40,7 +40,7 @@ export default {
   data() {
     return {
       currentApartments: [],
-      currentRoom: '1k',
+      currentRooms: ['1k'],
       currentMinFloor: 0,
       currentMaxFloor: 0,
       currentMinSquare: 0,
@@ -59,8 +59,8 @@ export default {
     '$store.state.apartments': function (value) {
       this.currentApartments = value;
     },
-    '$store.state.currentRoom': function (value) {
-      this.currentRoom = value;
+    '$store.state.currentRooms': function (value) {
+      this.currentRooms = value;
     },
     '$store.state.floor.min': function (value) {
       this.currentMinFloor = value;
@@ -88,9 +88,9 @@ export default {
   computed: {
     filteredApartments() {
       let filteredArray = this.currentApartments || [];
-      console.log(filteredArray);
       filteredArray = filteredArray
-        .filter((apartment) => apartment.size.toLowerCase() === this.currentRoom.toLowerCase());
+        .filter((apartment) => this.currentRooms
+          .find((currentRoom) => apartment.size.toLowerCase() === currentRoom.toLowerCase()));
 
       if (this.currentMinFloor && this.currentMaxFloor) {
         filteredArray = filteredArray

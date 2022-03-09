@@ -14,8 +14,9 @@ export default {
     &-btns {
       &__btn {
         &--reset {
-          padding-bottom: 3px;
+          margin-top: 15px;
           width: fit-content;
+          padding-bottom: 3px;
           font-size: 10px;
           font-weight: 700;
           line-height: 1;

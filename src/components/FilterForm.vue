@@ -8,53 +8,53 @@
         <ul class="form-rooms__list">
           <FormItem class="form-rooms__item">
             <label for="room-s" class="form-rooms__label">
-              <FormItemInput
+              <input class="form-rooms__input"
+                :checked="rooms.find(room=> room === 'XS')"
                 id="room-s"
-                inputName="room"
+                name="room-s"
                 value="XS"
-                type="radio"
-                v-model="room"
-              >
-              </FormItemInput>
+                type="checkbox"
+                v-model="rooms"
+                >
               <div class="form-rooms__input--custom">S</div>
             </label>
           </FormItem>
           <FormItem class="form-rooms__item">
             <label for="room-1" class="form-rooms__label">
-              <FormItemInput
+              <input class="form-rooms__input"
+                :checked="rooms.find(room=> room == '1k')"
                 id="room-1"
-                inputName="room"
+                name="room-1"
                 value="1k"
-                type="radio"
-                v-model="room"
-              >
-              </FormItemInput>
+                type="checkbox"
+                v-model="rooms"
+                >
               <div class="form-rooms__input--custom">1к</div>
             </label>
           </FormItem>
           <FormItem class="form-rooms__item">
             <label class="form-rooms__label" for="room-2">
-              <FormItemInput
+              <input class="form-rooms__input"
+                :checked="rooms.find(room=> room === '2k')"
                 id="room-2"
-                inputName="room"
-                type="radio"
+                name="room-2"
+                type="checkbox"
                 value="2k"
-                v-model="room"
-              >
-              </FormItemInput>
+                v-model="rooms"
+                >
               <div class="form-rooms__input--custom">2к</div>
             </label>
           </FormItem>
           <FormItem class="form-rooms__item">
             <label class="form-rooms__label" for="room-3">
-              <FormItemInput
+              <input class="form-rooms__input"
+                :checked="rooms.find(room=> room === '3k')"
                 id="room-3"
-                inputName="room"
+                name="room-3"
                 value="3k"
-                type="radio"
-                v-model="room"
-              >
-              </FormItemInput>
+                type="checkbox"
+                v-model="rooms"
+                >
               <div class="form-rooms__input--custom">3к</div>
             </label>
           </FormItem>
@@ -81,22 +81,7 @@
             v-model="maxFloor"
           />
         </div>
-        <div class="form-floors__wrapper form-floors__wrapper--range">
-          <FormItemSetInput
-            type="range"
-            :min="$store.state.floor.min"
-            :max="$store.state.floor.max"
-            class="form-floors__input form-floors__input-range--min"
-            v-model="minFloor"
-          />
-          <FormItemSetInput
-            type="range"
-            :min="$store.state.floor.min"
-            :max="$store.state.floor.max"
-            class="form-floors__input form-floors__input-range--max"
-            v-model="maxFloor"
-          />
-        </div>
+          <RangeSlider :minValue.sync="minFloor"  :maxValue.sync="maxFloor" />
         </div>
       </FormFilterItem>
       <FormFilterItem class="filter-form__item form-square">
@@ -121,22 +106,7 @@
             v-model="fixedMaxSquare"
           />
         </div>
-        <div class="form-square__wrapper form-square__wrapper--range">
-          <FormItemSetInput
-            type="range"
-            :min="prettyMinSquare"
-            :max="prettyMaxSquare"
-            class="form-square__input form-square__input-range--min"
-            v-model="fixedMinSquare"
-          />
-          <FormItemSetInput
-            type="range"
-            :min="prettyMinSquare"
-            :max="prettyMaxSquare"
-            class="form-square__input form-square__input-range--max"
-            v-model="fixedMaxSquare"
-          />
-        </div>
+        <RangeSlider :minValue.sync="fixedMinSquare"  :maxValue.sync="fixedMaxSquare" />
         </div>
       </FormFilterItem>
       <FormFilterItem class="filter-form__item form-price">
@@ -164,22 +134,7 @@
             v-model="fixedMaxPrice"
           />
         </div>
-        <div class="form-price__wrapper form-price__wrapper--range">
-          <FormItemSetInput
-            type="range"
-            :min="prettyMinPrice"
-            :max="prettyMaxPrice"
-            class="form-price__input form-price__input-range--min"
-            v-model="fixedMinPrice"
-          />
-          <FormItemSetInput
-            type="range"
-            :min="prettyMinPrice"
-            :max="prettyMaxPrice"
-            class="form-price__input form-price__input-range--max"
-            v-model="fixedMaxPrice"
-          />
-        </div>
+        <RangeSlider :minValue.sync="fixedMinPrice"  :maxValue.sync="fixedMaxPrice" />
         </div>
       </FormFilterItem>
 
@@ -206,7 +161,7 @@ import FormFilterItem from '@/components/FormFilterItem.vue';
 import FormItem from '@/components/FormItem.vue';
 import FormItemSetInput from '@/components/FormItemSetInput.vue';
 import BaseBtn from '@/components/BaseBtn.vue';
-import FormItemInput from '@/components/FormItemInput.vue';
+import RangeSlider from '@/components/RangeSlider.vue';
 
 export default {
   data() {
@@ -217,23 +172,23 @@ export default {
       maxFloor: this.currentMaxFloor || 0,
       maxSquare: this.currentMaxSquare || 0,
       minSquare: this.currentMinSquare || 0,
-      room: this.currentRoom || null,
+      rooms: this.currentRooms,
     };
   },
   props: ['currentMaxPrice', 'currentMinPrice', 'currentMaxSquare',
-    'currentMinSquare', 'currentMaxFloor', 'currentMinFloor', 'currentRoom'],
+    'currentMinSquare', 'currentMaxFloor', 'currentMinFloor', 'currentRooms'],
   components: {
     FormTitle,
     FormFilterItem,
     FormItem,
     FormItemSetInput,
     BaseBtn,
-    FormItemInput,
+    RangeSlider,
   },
 
   watch: {
-    currentRoom(value) {
-      this.room = value;
+    currentRooms(value) {
+      this.rooms = value;
     },
     currentMinFloor(value) {
       this.minFloor = value;
@@ -263,7 +218,7 @@ export default {
       this.$emit('update:currentMinSquare', this.minSquare);
       this.$emit('update:currentMaxFloor', this.maxFloor);
       this.$emit('update:currentMinFloor', this.minFloor);
-      this.$emit('update:currentRoom', this.room);
+      this.$emit('update:currentRooms', this.rooms);
     },
 
     reset() {
@@ -273,7 +228,7 @@ export default {
       this.$emit('update:currentMinSquare', this.$store.state.square.min);
       this.$emit('update:currentMaxFloor', this.$store.state.floor.max);
       this.$emit('update:currentMinFloor', this.$store.state.floor.min);
-      this.$emit('update:currentRoom', this.$store.state.currentRoom);
+      this.$emit('update:currentRooms', this.$store.state.currentRooms);
     },
   },
 
@@ -327,10 +282,23 @@ export default {
 </script>
 
 <style lang="scss">
+
+  .form {
+    &-rooms {
+      &__input {
+        display: none;
+        &:checked + &--custom {
+          background: #70D24E;
+          color: #fff;
+        }
+      }
+    }
+  }
 .filter-form {
   &__list {
     display: flex;
     justify-content: space-between;
+    align-items: flex-start;
   }
 
   &__item {
@@ -368,7 +336,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
   }
 
   &-rooms {
@@ -413,9 +381,6 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      &--range {
-        display: none;
-      }
     }
   }
   &-price {
@@ -423,9 +388,6 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      &--range {
-        display: none;
-      }
     }
   }
   &-floors {
@@ -433,9 +395,6 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      &--range {
-        display: none;
-      }
     }
   }
 }

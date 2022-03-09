@@ -7,7 +7,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    currentRoom: '1k',
+    currentRooms: ['1k'],
     apartments: [],
     apartmentsData: [],
     floor: {
@@ -30,7 +30,7 @@ export default new Vuex.Store({
       state.apartmentsData = payload;
     },
     filterRoom(state, payload) {
-      state.currentRoom = payload;
+      state.currentRooms = payload;
     },
     filterMinFloor(state, payload) {
       state.floor.chosenFilterMin = payload;

@@ -10,14 +10,17 @@
       </div>
       <div class="apartment__middle">
         <div class="apartment__id">№ {{apartment.number}}</div>
-        <img :src="apartment.img" :alt="apartment.building_name" class="apartment__img" />
+        <v-img :src="apartment.img" :alt="apartment.building_name" class="apartment__img" />
       </div>
       <div class="apartment__bottom">
         <h3 class="apartment__price">{{formattedPrice(prettyPrice)}} р.</h3>
         <small class="apartment__square-price">
           {{formattedPrice(priceForSquare)}} р. за м <sup>2</sup></small>
+          <transition name=fade>
         <BaseBtn text="ПОДРОБНЕЕ"
         v-show="isActive"  class="apartment__detailed"> </BaseBtn>
+          </transition>
+
       </div>
     </article>
   </li>
@@ -61,15 +64,17 @@ export default {
 </script>
 
 <style lang="scss">
-  .content {
-    &__item {
-      &:not(:nth-child(4n)) {
-        margin-right: 30px;
-      }
-    }
 
-  }
+.fade-enter-active, .fade-leave-active {
+  transition-property: opacity, visibility;
+  transition-timing-function: ease-in-out;
+  transition-duration: .3s;
+}
 
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+  visibility: hidden;
+}
   .apartment {
     display: flex;
     flex-direction: column;
